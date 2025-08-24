@@ -6,7 +6,7 @@ resource "null_resource" "register_multiple_peering_feature" {
       echo "Checking if the Azure feature 'AllowMultiplePeeringLinksBetweenVnets' is registered.."
       state=$(az feature show --name AllowMultiplePeeringLinksBetweenVnets --namespace Microsoft.Network --query 'properties.state' -o tsv)
       if [ "$state" != "Registered" ]; then
-        echo "Feature not registered. Registering now..."
+        echo "Feature not registered. Registering now.."
         az feature register --namespace Microsoft.Network --name AllowMultiplePeeringLinksBetweenVnets
         echo "Waiting for the feature to be registered (this may take a few minutes).."
         while [ "$state" != "Registered" ]; do
@@ -14,8 +14,11 @@ resource "null_resource" "register_multiple_peering_feature" {
           state=$(az feature show --name AllowMultiplePeeringLinksBetweenVnets --namespace Microsoft.Network --query 'properties.state' -o tsv)
         done
         echo "Feature successfully registered."
+        echo "Invoked provider Microsoft.Network to apply changes.."
+        az provider register -n Microsoft.Network
+        echo "Provider Microsoft.Network updated."
       else
-        echo "Feature already registered."
+        echo "Feature already registered. No further action required."
       fi
     EOT
     interpreter = ["/bin/bash", "-c"]
