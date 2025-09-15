@@ -1,5 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
 
+![alt text](diagram.png)
+
 #### Requirements
 
 | Name | Version |
