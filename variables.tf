@@ -21,7 +21,7 @@ variable "tags" {
   type        = map(string)
   default = {
     project     = "subnet peering"
-    environment = "lab"
+    environment = "demo"
     deployment  = "terraform"
   }
 }
